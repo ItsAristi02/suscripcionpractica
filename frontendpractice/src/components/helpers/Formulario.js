@@ -1,12 +1,70 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import '../../assets/style/formulario.css';
 
-const url = 'http://localhost:8080/cliente/';
 
 const Formulario = () => {
 
 
-    const { register, formState: { errors }, watch, handleSubmit } = useForm({
+    
+    const [tipoIdent, setTipoIdent] = useState([]);
+    const [numeroIdentificacion, setNumeroIdentificacion] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [apellidos, setApellidos] = useState('');
+    const [fechaNacimiento, setFechaNacimiento] = useState('');
+    const [direccion, setDireccion] = useState('');
+    const [pais, setPais] = useState('');
+    const [departamento, setDepartamento] = useState('');
+    const [ciudad, setCiudad] = useState('');
+    const [marca, setMarca] = useState([]);
+
+   
+
+    const getTipoIdent = () => {
+        axios.get('http://localhost:8080/identificacion').then(({ data }) => setTipoIdent(data))
+    }
+
+    const getMarca = () => {
+        axios.get('http://localhost:8080/marca').then(({ data }) => setMarca(data))
+    }
+
+    useEffect(() => {
+        getTipoIdent();
+        getMarca();
+    }, [])
+
+    const postCliente = async (e) => {
+        e.preventDefault()
+        await axios.post('http://localhost:8080/cliente', {
+           
+            tipoIdentificacion: tipoIdent,
+            numeroIdentificacion: numeroIdentificacion,
+            nombre: nombre,
+            apellidos: apellidos,
+            fechaNacimiento: fechaNacimiento,
+            direccion: direccion,
+            pais: pais,
+            departamento: departamento,
+            ciudad: ciudad,
+            marca: marca
+
+        })
+
+        setTipoIdent('');
+        setNumeroIdentificacion('');
+        setNombre('');
+        setApellidos('');
+        setFechaNacimiento('');
+        setDireccion('');
+        setPais('');
+        setDepartamento('');
+        setCiudad('');
+        setMarca('');
+
+    }
+
+    const { register, formState: { errors }, handleSubmit } = useForm({
         defaultValues: {
             tipoIdentifiacion: '',
             numeroIdentificacion: '',
@@ -40,6 +98,9 @@ const Formulario = () => {
                         })}
                     >
                         <option value="">Elige un opción...</option>
+                        {tipoIdent.map((tipos) => (
+                            <option key={tipos.id} value={tipos.id}>{tipos.tipoIdentificacion} </option>
+                        ))}
                     </select>
                     {errors.tipoIdentificacion?.type === 'required' && <p>El campo tipo de identificación es requerido</p>}
                 </section>
@@ -109,10 +170,9 @@ const Formulario = () => {
                         placeholder=""
                         {...register('fechaNacimiento', {
                             required: true,
-                            pattern: /^(?:(?:(?:0?[1-9]|1\d|2[0-8])[/](?:0?[1-9]|1[0-2])|(?:29|30)[/](?:0?[13-9]|1[0-2])|31[/](?:0?[13578]|1[02]))[/](?:0{2,3}[1-9]|0{1,2}[1-9]\d|0?[1-9]\d{2}|[1-9]\d{3})|29[/]0?2[/](?:\d{1,2}(?:0[48]|[2468][048]|[13579][26])|(?:0?[48]|[13579][26]|[2468][048])00))$/
                         })} />
                     {errors.fechaNacimiento?.type === 'required' && <p>El fecha de nacimiento es requerido</p>}
-                    {errors.fechaNacimiento?.type === 'pattern' && <p>El formato de fecha de nacimiento es invalido</p>}
+
                 </section>
 
                 <section className="grupoInput">
@@ -155,6 +215,7 @@ const Formulario = () => {
                             required: true,
                         })}  >
                         <option value="">Elige un opción...</option>
+                        <option value="1">1</option>
                     </select>
                     {errors.departamento?.type === 'required' && <p>El campo departamento es requerido</p>}
                 </section>
@@ -169,6 +230,7 @@ const Formulario = () => {
                             required: true,
                         })}  >
                         <option value="">Elige un opción...</option>
+                        <option value="1">1</option>
                     </select>
                     {errors.ciudad?.type === 'required' && <p>El campo ciudad es requerido</p>}
                 </section>
@@ -183,6 +245,9 @@ const Formulario = () => {
                             required: true,
                         })} >
                         <option value="">Elige un opción...</option>
+                        {marca.map((marcas) => (
+                            <option key={marcas.id} value={marcas.id}>{marcas.marca} </option>
+                        ))}
                     </select>
                     {errors.marcas?.type === 'required' && <p>El campo marcas es requerido</p>}
                 </section>
@@ -191,6 +256,8 @@ const Formulario = () => {
                     <input type="submit" value="suscribirse" className="button suscribirse" ></input>
                 </section>
             </form>
+
+            
         </section>
     )
 }

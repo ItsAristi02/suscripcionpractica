@@ -1,14 +1,23 @@
 
 import './App.css';
-import Formulario from './components/helpers/Formulario.js';
-import Navbar from './components/helpers/Navbar.js';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from './pages/Layout';
+import LandingPage from './pages/LandingPage';
+import Subscription from './pages/Subscription';
+
 
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Formulario />
+     <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="Subscription" element={<Subscription />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
     </div>
   );
 }

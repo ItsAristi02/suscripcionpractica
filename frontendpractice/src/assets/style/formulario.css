@@ -1,7 +1,8 @@
 .formContainer {
     display: flex;
     justify-content: center;
-    flex-direction: column;   
+    flex-direction: column;  
+    height: 90vh; 
 }
 
 form {
@@ -29,7 +30,7 @@ section {
 }
 
 .formItem {
-    width: 45rem !important;
+    width: 30rem !important;
     height: 3rem !important;
     border-radius: 5px !important;
     outline: none;
