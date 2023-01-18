@@ -85,6 +85,7 @@ const Formulario = () => {
 
     return (
         <section className="formContainer">
+             <h1>Formulario de inscripción</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <section className="grupoInput">
                     <label>Tipo de identificación</label>
@@ -251,13 +252,10 @@ const Formulario = () => {
                     </select>
                     {errors.marcas?.type === 'required' && <p>El campo marcas es requerido</p>}
                 </section>
-
                 <section className="grupoButton">
-                    <input type="submit" value="suscribirse" className="button suscribirse" ></input>
+                    <input type="submit" value="SUSCRIBIRSE" className="button suscribirse" ></input>
                 </section>
             </form>
-
-            
         </section>
     )
 }

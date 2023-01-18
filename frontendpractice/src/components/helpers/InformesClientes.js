@@ -1,3 +1,5 @@
+import '../../assets/style/formulario.css';
+import {useState} from 'react';
 
 const InformesClientes = () =>{
 
@@ -13,6 +15,7 @@ const InformesClientes = () =>{
 
     return(
         <section class="bd-example">
+            <h1>Información de clientes</h1>
                 <table class="table table-dark table-borderless">
                     <thead>
                         <tr className="">
@@ -43,10 +46,8 @@ const InformesClientes = () =>{
                                 <th>{cliente.departamento}</th>
                                 <th>{cliente.ciudad}</th>
                                 <th>{cliente.marca}</th>
-                                <th>
-
-                                </th>
-                                <th> </th>
+                                <th></th>
+                                <th></th>
 
                             </tr>
 

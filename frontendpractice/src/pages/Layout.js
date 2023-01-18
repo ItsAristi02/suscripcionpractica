@@ -26,10 +26,12 @@ const Layout = () => {
       </section>
     </nav>
     
-    <main>
+    <main className="main">
       <section>
-      <Outlet />
-      </section>
+        
+        <Outlet />
+        </section>
+      
     </main>
 
       

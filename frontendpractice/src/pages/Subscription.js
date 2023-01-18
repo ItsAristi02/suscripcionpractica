@@ -1,13 +1,21 @@
+
 import Formulario from "../components/helpers/Formulario";
 import Footer from "../components/helpers/Footer";
+import Marcas from "../components/helpers/Marcas";
+
+
 
 const Subscription = () =>{
 
     return(
-        <main>
+        <section>
             <Formulario />
-            <Footer />
-        </main>
+            <Marcas />
+            <Footer /> 
+            
+              
+                 
+        </section>
     )
 }
 

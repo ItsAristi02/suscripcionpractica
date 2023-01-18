@@ -56,5 +56,9 @@ ul a{
 }
 
 nav ul li a:hover{
-    color: blueviolet;
+    color: #C4B6B6;
+}
+
+.main{
+    height: 100vh;
 }
