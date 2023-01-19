@@ -5,33 +5,48 @@ import com.example.BackEndPractice.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClienteService {
+public class ClienteService implements ServicioBase<ClienteModel> {
 
     @Autowired
     ClienteRepository clienteRepository;
 
-    public ArrayList<ClienteModel> buscarClientes(){
-        return(ArrayList<ClienteModel>) clienteRepository.findAll();
+    @Override
+    public List<ClienteModel> listarClientes() throws Exception {
+        try{
+            List<ClienteModel> clientes= clienteRepository.findAll();
+            return clientes;
+        }
+        catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 
-    public ClienteModel guardarCliente(ClienteModel cliente){
-        return clienteRepository.save(cliente);
+
+    @Override
+    public ClienteModel buscarPorId(Integer id) throws Exception {
+        try{
+            Optional<ClienteModel> clienteBuscado=clienteRepository.findById(id);
+            return clienteBuscado.get();
+        }
+        catch(Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 
-    public Optional<ClienteModel> buscarPorId(Integer id){
-        return clienteRepository.findById(id);
-    }
-
-    public boolean eliminarCliente(Integer id){
-        try {
-            clienteRepository.deleteById(id);
-            return true;
-        }catch (Exception error){
-            return false;
+    @Override
+    public ClienteModel registrarCliente(ClienteModel entity) throws Exception {
+        try{
+            entity = clienteRepository.save(entity);
+            return entity;
+        }
+        catch(Exception error){
+            throw new Exception(error.getMessage());
         }
     }
 }
+
