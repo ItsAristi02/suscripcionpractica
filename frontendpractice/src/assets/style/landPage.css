@@ -1,3 +1,4 @@
+
 .hero {
 	height: 100vh;
 	background-image: url('file:///C:/Users/acer%20Aspire%203/Desktop/ejerciciopracticogco/frontendpractice/src/assets/images/landPage.jpeg');
@@ -17,9 +18,15 @@
 	align-items: center;
 }
 
+.buttonContainer{
+	display: flex !important;
+	flex-direction: row;
+	gap: 10px;
+}
+
 #filter{
-	-webkit-backdrop-filter: blur(15px);
-	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(10px);
 	background-color: rgba(243, 243, 243, 0.2);
 }
 
@@ -28,6 +35,10 @@
 	font-size: 20px;
 	margin: 0.7% auto;
 	text-shadow: 0 10px 30px #000;
+	font-weight: lighter;
+	font-style: italic;
+	text-overflow: ellipsis;
+	text-transform: unset;
 }
 
 button{
@@ -45,7 +56,9 @@ button{
 .btn{
 	color: white;
 	text-decoration: none;
-	font-size: 20px;
+	font-size: 15px;
+	font-weight: bold;
+	font-style: italic;
 }
 
 button:hover{

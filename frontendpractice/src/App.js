@@ -4,7 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './pages/Layout';
 import LandingPage from './pages/LandingPage';
 import Subscription from './pages/Subscription';
-import InformesClientes from './components/helpers/InformesClientes';
+import InformesClientes from './pages/InformesClientes';
+import Carrusel from './pages/Carrusel';
+
 
 
 
@@ -16,7 +18,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path="Subscription" element={<Subscription />} />
-          <Route path="InformesClientes" element={<InformesClientes />} />
+          <Route path="Informes" element={<InformesClientes />} />
+          <Route path="Colecciones" element={<Carrusel />}/> 
         </Route>
       </Routes>
     </BrowserRouter>

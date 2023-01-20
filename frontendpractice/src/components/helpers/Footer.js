@@ -31,7 +31,9 @@ const Footer = () => {
             </div>
             <div className="grupo-2">
                 <small>&copy; 2023
-                    <b>COMODIN</b>
+                    <b>
+                    COMODIN
+                    </b>
                     - Todos los Derechos Reservados.</small>
             </div>
         </footer>

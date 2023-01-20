@@ -1,4 +1,4 @@
-import '../../assets/style/formulario.css';
+import '../assets/style/formulario.css';
 import {useState} from 'react';
 
 const InformesClientes = () =>{
@@ -14,7 +14,7 @@ const InformesClientes = () =>{
     getClientes()
 
     return(
-        <section class="bd-example">
+        <section class="tabla-container">
             <h1>Información de clientes</h1>
                 <table class="table table-dark table-borderless">
                     <thead>
@@ -29,14 +29,12 @@ const InformesClientes = () =>{
                             <th scope="col">Departamento</th>
                             <th scope="col">Ciudad</th>
                             <th scope="col">Marca</th>
-
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {clientes.map(cliente => (
                             <tr key={cliente.id}>
-                                <th>{cliente.tipoIdentifiacion}</th>
+                                <th>{cliente.tipoIdentificacion}</th>
                                 <th>{cliente.numeroIdentificacion}</th>
                                 <th>{cliente.nombre}</th>
                                 <th>{cliente.apellidos}</th>
@@ -46,9 +44,6 @@ const InformesClientes = () =>{
                                 <th>{cliente.departamento}</th>
                                 <th>{cliente.ciudad}</th>
                                 <th>{cliente.marca}</th>
-                                <th></th>
-                                <th></th>
-
                             </tr>
 
                         ))}

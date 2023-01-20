@@ -1,14 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import '../../assets/style/formulario.css';
 
 
 const Formulario = () => {
-
-
     
-    const [tipoIdent, setTipoIdent] = useState([]);
+    const [tipoIdentificacion, setTipoIdentificacion] = useState('');
     const [numeroIdentificacion, setNumeroIdentificacion] = useState('');
     const [nombre, setNombre] = useState('');
     const [apellidos, setApellidos] = useState('');
@@ -17,28 +15,54 @@ const Formulario = () => {
     const [pais, setPais] = useState('');
     const [departamento, setDepartamento] = useState('');
     const [ciudad, setCiudad] = useState('');
-    const [marca, setMarca] = useState([]);
+    const [marca, setMarca] = useState('');
+    const navigate = useNavigate();
 
-   
+    const [tipos, setTipos] = useState([]);
+    const [marcas, setMarcas] = useState([]);
+    const [paises, setPaises] = useState([]);
+    const [departamentos, setDepartamentos] = useState([]);
+    const [ciudades, setCiudades] = useState([]);
 
-    const getTipoIdent = () => {
-        axios.get('http://localhost:8080/identificacion').then(({ data }) => setTipoIdent(data))
+
+    const getTipos = () => {
+        axios.get('http://localhost:8080/identificacion').then(({ data }) => setTipos(data))
     }
 
-    const getMarca = () => {
-        axios.get('http://localhost:8080/marca').then(({ data }) => setMarca(data))
+    const getMarcas = () => {
+        axios.get('http://localhost:8080/marca').then(({ data }) => setMarcas(data))
     }
+
+
+    // Llamar los paises
+    useEffect(() => {
+        axios.get("http://localhost:8080/paises").then((res) => setPaises(res.data));
+    }, []);
+
+    // Llamar los departamentos
+    useEffect(() => {
+        axios
+            .get("http://localhost:8080/departamentos")
+            .then((res) => setDepartamentos(res.data));
+    }, []);
+
+    // Llamar las ciudades
+    useEffect(() => {
+        axios
+            .get("http://localhost:8080/ciudades")
+            .then((res) => setCiudades(res.data));
+    }, []);
 
     useEffect(() => {
-        getTipoIdent();
-        getMarca();
+        getTipos();
+        getMarcas();
     }, [])
 
     const postCliente = async (e) => {
         e.preventDefault()
         await axios.post('http://localhost:8080/cliente', {
-           
-            tipoIdentificacion: tipoIdent,
+
+            tipoIdentificacion: tipoIdentificacion,
             numeroIdentificacion: numeroIdentificacion,
             nombre: nombre,
             apellidos: apellidos,
@@ -50,8 +74,9 @@ const Formulario = () => {
             marca: marca
 
         })
+        navigate('/Informes')
 
-        setTipoIdent('');
+        setTipoIdentificacion('');
         setNumeroIdentificacion('');
         setNombre('');
         setApellidos('');
@@ -64,200 +89,123 @@ const Formulario = () => {
 
     }
 
-    const { register, formState: { errors }, handleSubmit } = useForm({
-        defaultValues: {
-            tipoIdentifiacion: '',
-            numeroIdentificacion: '',
-            nombre: '',
-            apellidos: '',
-            fechaNacimiento: '',
-            direccion: '',
-            pais: '',
-            departamento: '',
-            ciudad: '',
-            marcas: ''
-        }
-    });
-
-    const onSubmit = (data) => {
-        console.log(data);
-    }
 
     return (
         <section className="formContainer">
-             <h1>Formulario de inscripción</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <section className="grupoInput">
-                    <label>Tipo de identificación</label>
-                    <select
-                        name="tipoIdentificacion"
-                        id="marca"
-                        type="text"
-                        className="formItem"
-                        {...register('tipoIdentificacion', {
-                            required: true,
-                        })}
-                    >
-                        <option value="">Elige un opción...</option>
-                        {tipoIdent.map((tipos) => (
-                            <option key={tipos.id} value={tipos.id}>{tipos.tipoIdentificacion} </option>
-                        ))}
-                    </select>
-                    {errors.tipoIdentificacion?.type === 'required' && <p>El campo tipo de identificación es requerido</p>}
-                </section>
-
-                <section className="grupoInput">
-                    <label>Número de Identificación</label>
-                    <input
-                        type="text"
-                        name="numeroIdentificacion"
-                        className="formItem"
-                        placeholder=" "
-                        {...register('numeroIdentificacion', {
-                            required: true,
-                            maxLength: 12,
-                            minLength: 5,
-                            pattern: /^[0-9]+$/
-                        })} />
-                    {errors.numeroIdentificacion?.type === 'required' && <p>El campo número de identificación es requerido</p>}
-                    {errors.numeroIdentificacion?.type === 'minLength' && <p>El campo número de identificación  debe tener menos de 12 caracteres</p>}
-                    {errors.numeroIdentificacion?.type === 'maxLength' && <p>El campo número de identificación  debe tener menos de 12 caracteres</p>}
-                    {errors.numeroIdentificacion?.type === 'pattern' && <p>El formato del número de identificación es invalido, solo se permiten números</p>}
-                </section>
-
+            <h1>Formulario de inscripción</h1>
+            <form>
                 <section className="grupoInput">
                     <label>Nombre</label>
-                    <input
-                        type="text"
-                        name="nombre"
-                        id="nombre"
-                        className="formItem"
-                        placeholder=""
-                        {...register('nombre', {
-                            required: true,
-                            maxLength: 30,
-                            pattern: /^[a-zA-ZÀ-ÿ\s]{1,40}$/
-                        })} />
-                    {errors.nombre?.type === 'required' && <p>El campo nombre es requerido</p>}
-                    {errors.nombre?.type === 'maxLength' && <p>El campo nombre debe tener menos de 30 caracteres</p>}
-                    {errors.nombre?.type === 'pattern' && <p>El formato del nombre es invalido</p>}
+                    <input type="text" name="nombre" id="nombre" className="formItem" defaultValue={nombre} onChange={(e) => setNombre(e.target.value)}
+                    />
+
                 </section>
 
                 <section className="grupoInput">
                     <label>Apellidos</label>
-                    <input
-                        type="text"
-                        name="apellidos"
-                        id="apellidos"
-                        className="formItem"
-                        placeholder=""
-                        {...register('apellidos', {
-                            required: true,
-                            maxLength: 30,
-                            pattern: /^[a-zA-ZÀ-ÿ\s]{1,30}$/
-                        })} />
-                    {errors.apellidos?.type === 'required' && <p>El campo apellidos es requerido</p>}
-                    {errors.apellidos?.type === 'maxLength' && <p>El campo apellidos debe tener menos de 30 caracteres</p>}
-                    {errors.apellidos?.type === 'pattern' && <p>El formato de los apellidos es invalido</p>}
+                    <input type="text" name="apellidos" id="apellidos" className="formItem" defaultValue={apellidos} onChange={(e) => setApellidos(e.target.value)}
+                    />
+                </section>
+                <section className="grupoInput">
+                    <label>Tipo de identificación</label>
+                    <select name="tipoIdentificacion" id="tipoIdentificacion" className="formItem" defaultValue={tipoIdentificacion} onChange={(e) => setTipoIdentificacion(e.target.value)}
+                    >
+                        <option value="">Elige una opción...</option>
+                        {
+                            tipos.map((tipoIdent) => (
+                                <option key={
+                                    tipoIdent.id
+                                }>
+                                    {
+                                        tipoIdent.tipoIdentificacion
+                                    } </option>
+                            ))
+                        } </select>
+                </section>
+
+                <section className="grupoInput">
+                    <label>Número de Identificación</label>
+                    <input type="text" name="numeroIdentificacion" className="formItem" placeholder=" " defaultValue={numeroIdentificacion} onChange={(e) => setNumeroIdentificacion(e.target.value)} />
                 </section>
 
                 <section className="grupoInput">
                     <label>Fecha de nacimiento</label>
-                    <input
-                        type="date"
-                        name="fechaNacimiento"
-                        id="fechaNacimiento"
-                        className="formItem"
-                        placeholder=""
-                        {...register('fechaNacimiento', {
-                            required: true,
-                        })} />
-                    {errors.fechaNacimiento?.type === 'required' && <p>El fecha de nacimiento es requerido</p>}
-
-                </section>
+                    <input type="date" name="fechaNacimiento" id="fechaNacimiento" className="formItem" placeholder="" defaultValue={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} />  </section>
 
                 <section className="grupoInput">
                     <label>Dirección</label>
-                    <input
-                        type="text"
-                        name="direccion"
-                        id="direccion"
-                        className="formItem"
-                        placeholder=""
-                        {...register('direccion', {
-                            required: true,
-                            pattern: /^[a-zA-Z0-9_-]{4,16}$/
-                        })} />
-                    {errors.direccion?.type === 'required' && <p>El campo dirección es requerido</p>}
-                    {errors.direccion?.type === 'pattern' && <p>El formato de dirección es invalido</p>}
+                    <input type="text" name="direccion" id="direccion" className="formItem" placeholder="" defaultValue={direccion} onChange={(e) => setDireccion(e.target.value)}
+                    />
                 </section>
 
                 <section className="grupoInput">
                     <label>País</label>
                     <select
+                        defaultValue={pais}
+                        onChange={(e) => setPais(e.target.value)}
                         name="pais"
                         id="pais"
                         className="formItem"
-                        {...register('pais', {
-                            required: true,
-                        })}   >
-                        <option value="">Elige un opción...</option>
+                    >
+                        <option value="">Elige una opción...</option>
+                        {paises.map((pais) => (
+                            <option key={pais.id}>
+                                {pais.nombre}
+                            </option>
+                        ))}
                     </select>
-                    {errors.pais?.type === 'required' && <p>El campo pais es requerido</p>}
                 </section>
 
                 <section className="grupoInput">
                     <label>Departamento</label>
-                    <select
-                        name="departamento"
-                        id="departamento"
-                        className="formItem"
-                        {...register('departamento', {
-                            required: true,
-                        })}  >
-                        <option value="">Elige un opción...</option>
-                        <option value="1">1</option>
-                    </select>
-                    {errors.departamento?.type === 'required' && <p>El campo departamento es requerido</p>}
+                    <select name="departamento" id="departamento" className="formItem" defaultValue={departamento} onChange={(e) => setDepartamento(e.target.value)}
+                    >
+                        <option value="">Elige una opción...</option>
+                        {
+                            departamentos.map((departamento) => (
+                                <option key={departamento.id}>
+                                {departamento.nombre } </option>
+                            ))
+                        } </select>
                 </section>
 
                 <section className="grupoInput">
                     <label>Ciudad</label>
-                    <select
-                        name="ciudad"
-                        id="ciudad"
-                        className="formItem"
-                        {...register('ciudad', {
-                            required: true,
-                        })}  >
-                        <option value="">Elige un opción...</option>
-                        <option value="1">1</option>
-                    </select>
-                    {errors.ciudad?.type === 'required' && <p>El campo ciudad es requerido</p>}
+                    <select name="ciudad" id="ciudad" className="formItem" defaultValue={ciudad} onChange={(e) => setCiudad(e.target.value)}
+                    >
+                        <option value="">Elige una opción...</option>
+                        {
+                            ciudades.map((ciudad) => (
+                                <option key={ciudad.id}>
+                                    {ciudad.nombre} </option>
+                            ))
+                        } </select>
                 </section>
 
                 <section className="grupoInput">
                     <label>Marca</label>
-                    <select
-                        name="marca"
-                        id="marca"
-                        className="formItem"
-                        {...register('marcas', {
-                            required: true,
-                        })} >
+                    <select name="marca" id="marca" className="formItem" defaultValue={marca} onChange={(e) => setMarca(e.target.value)}
+                    >
                         <option value="">Elige un opción...</option>
-                        {marca.map((marcas) => (
-                            <option key={marcas.id} value={marcas.id}>{marcas.marca} </option>
-                        ))}
-                    </select>
-                    {errors.marcas?.type === 'required' && <p>El campo marcas es requerido</p>}
+                        {
+                            marcas.map((marca) => (
+                                <option key={
+                                    marca.id
+                                }>
+                                    {
+                                        marca.marca
+                                    } </option>
+                            ))
+                        } </select>
                 </section>
                 <section className="grupoButton">
-                    <input type="submit" value="SUSCRIBIRSE" className="button suscribirse" ></input>
+                    <input type="submit" value="SUSCRIBIRSE" className="button suscribirse" onClick={postCliente}></input>
                 </section>
             </form>
+
         </section>
     )
+
 }
 
 export default Formulario;

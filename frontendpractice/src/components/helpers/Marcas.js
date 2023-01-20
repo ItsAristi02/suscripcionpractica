@@ -11,19 +11,19 @@ const Marcas = () => {
     return (
         <section className='iconMarcas'>
             <section className='marcasContainer'>
-                <a href="https://www.ae.com.co/?gclid=CjwKCAiA5Y6eBhAbEiwA_2ZWIQH-JobpKpa1OKHXvgf7QPfKjWgBPTbvrFhPlfjItg0Es6raT_r-ixoC1iAQAvD_BwE"><img src={americanEagle}
+                <a href="https://www.ae.com.co/"><img src={americanEagle}
                         width={'140px'}/></a>
-                <a href="https://www.ae.com.co/?gclid=CjwKCAiA5Y6eBhAbEiwA_2ZWIQH-JobpKpa1OKHXvgf7QPfKjWgBPTbvrFhPlfjItg0Es6raT_r-ixoC1iAQAvD_BwE"><img src={americanino}
+                <a href="https://www.americanino.com/"><img src={americanino}
                         width={'140px'}/></a>
-                <a href="https://www.ae.com.co/?gclid=CjwKCAiA5Y6eBhAbEiwA_2ZWIQH-JobpKpa1OKHXvgf7QPfKjWgBPTbvrFhPlfjItg0Es6raT_r-ixoC1iAQAvD_BwE"><img src={esprit}
+                <a href="https://www.esprit.com.co/"><img src={esprit}
                         width={'140px'}/></a>
-                <a href="https://www.ae.com.co/?gclid=CjwKCAiA5Y6eBhAbEiwA_2ZWIQH-JobpKpa1OKHXvgf7QPfKjWgBPTbvrFhPlfjItg0Es6raT_r-ixoC1iAQAvD_BwE"><img src={star}
+                <a href="https://www.g-star.com/es_es"><img src={star}
                         width={'140px'}/></a>
-                <a href="https://www.ae.com.co/?gclid=CjwKCAiA5Y6eBhAbEiwA_2ZWIQH-JobpKpa1OKHXvgf7QPfKjWgBPTbvrFhPlfjItg0Es6raT_r-ixoC1iAQAvD_BwE"><img src={nafnaf}
+                <a href="https://www.nafnaf.com.co/"><img src={nafnaf}
                         width={'140px'}/></a>
-                <a href="https://www.ae.com.co/?gclid=CjwKCAiA5Y6eBhAbEiwA_2ZWIQH-JobpKpa1OKHXvgf7QPfKjWgBPTbvrFhPlfjItg0Es6raT_r-ixoC1iAQAvD_BwE"><img src={rifle}
+                <a href="https://www.rifle.com.co/"><img src={rifle}
                         width={'140px'}/></a>
-                <a href="https://www.ae.com.co/?gclid=CjwKCAiA5Y6eBhAbEiwA_2ZWIQH-JobpKpa1OKHXvgf7QPfKjWgBPTbvrFhPlfjItg0Es6raT_r-ixoC1iAQAvD_BwE"><img src={chevignon}
+                <a href="https://www.chevignon.com.co/"><img src={chevignon}
                         width={'140px'}/></a>
             </section>
         </section>
