@@ -12,7 +12,8 @@ public class PaisService {
     @Autowired
     private PaisRepository paisRepository;
 
-    public List<PaisModel> optenerPaises(){
+
+    public List<PaisModel> obtenerPaises(){
         return paisRepository.findAll();
     }
 }

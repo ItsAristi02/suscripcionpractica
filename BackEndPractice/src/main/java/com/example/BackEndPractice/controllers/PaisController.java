@@ -19,8 +19,8 @@ public class PaisController {
     private PaisService paisService;
 
     @GetMapping()
-    public ResponseEntity<List<PaisModel>> optenerPaises() {
-        List<PaisModel> paises = paisService.optenerPaises();
+    public ResponseEntity<List<PaisModel>> obtenerPaises() {
+        List<PaisModel> paises = paisService.obtenerPaises();
         return new ResponseEntity<>(paises, HttpStatus.OK);
     }
 }
